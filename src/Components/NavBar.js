@@ -41,6 +41,7 @@ const LogInBtn = styled.button`
     border:none ;
     background:none ;
     color: #FFFFFF;
+    margin-right: 15px;
 `;
 
 const ImgSign = styled.img`

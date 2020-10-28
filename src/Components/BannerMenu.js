@@ -1,15 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const Banner = styled.div`
-    width: 1060px;
+export const Banner = styled.div`
+    width: 100%;
     height: 210px;
     background-image: url(/banner.png);
-    margin-left: auto;
-    margin-right: auto;
+    background-size: cover;
     margin-bottom: 17px;
 `;
 
-export const BannerMenu = () => (
-    <Banner/>
-);
