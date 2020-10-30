@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {CheckButton} from './CheckButton';
 
 const Overlay = styled.div`
     position: fixed;
@@ -27,8 +28,14 @@ const Banner = styled.div`
     background-image: url(${({img}) => img});
     background-size: cover;
     background-position: center;
-    margin-bottom: 20px;
 
+`;
+const Content = styled.section`
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 200px);
 `;
 const PriceBlock = styled.div`
     display: flex;
@@ -37,23 +44,8 @@ const PriceBlock = styled.div`
     font-size: 30px;
     line-height: 53px;
 `;
-const NamePrice = styled.p`
-    margin-left: 37px;
-`;
-const Price = styled.p`
-    margin-right: 53px;
-`;
-const AddBtn = styled.button`
-    
-    
-    font-family: Roboto;
-    font-size: 21px;
-    line-height: 25px;
-    width: 250px;
-    height: 65px;
-    background: #299B01;
-    color: #FFFFFF;
-`;
+
+
 
 export const ModalItem = ({openItem, setOpenItem}) => {
 
@@ -69,12 +61,15 @@ export const ModalItem = ({openItem, setOpenItem}) => {
         
         <Modal>
             <Banner img={openItem.img}/>
-            <PriceBlock>
-              <NamePrice>{openItem.name}</NamePrice>  
-              <Price>{openItem.price.toLocaleString('ru-RU',
-               {style: 'currency', currency:'RUB'})}</Price>
-            </PriceBlock>
-            <AddBtn>Добавить</AddBtn>
+            <Content>
+                <PriceBlock>
+                    <div>{openItem.name}</div>  
+                    <div>{openItem.price.toLocaleString('ru-RU',
+                    {style: 'currency', currency:'RUB'})}</div>
+                </PriceBlock>
+                <CheckButton>Добавить</CheckButton>
+            </Content>
+            
             
            
         </Modal>
