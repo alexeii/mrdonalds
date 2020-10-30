@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Banner} from './BannerMenu'
-import DBMenu from './DBMenu';
+import DBMenu from '../../DBMenu';
 import {ListItem} from './ListItem';
 
 
