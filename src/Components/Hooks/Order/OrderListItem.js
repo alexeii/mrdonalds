@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import trashImage from '../../../image/trash.svg';
-
+import {totalPriceItems, formatCurrency} from '../../Functions/secondaryFunction';
 
 const OrderItemStyled = styled.li`
     display: flex;
@@ -36,8 +36,8 @@ const TrashButton = styled.button`
 export const OrderListItem = ({order}) => (
     <OrderItemStyled>
         <ItemName>{order.name}</ItemName>
-        <span>1</span>
-        <ItemPrice>{order.price} ₽</ItemPrice>
+        <span>{order.count}</span>
+        <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
         <TrashButton/>
     </OrderItemStyled>
 
