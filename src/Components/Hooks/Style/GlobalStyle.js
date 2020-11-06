@@ -60,4 +60,7 @@ export const GlobalStyle = createGlobalStyle`
      input::-webkit-inner-spin-button {
        -webkit-appearance: none;
      }
+     figure {
+       margin: 0 30px;
+     }
 `;
