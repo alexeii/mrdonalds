@@ -1,6 +1,7 @@
 import React from 'react'; 
 import firebase from "firebase/app";
 import 'firebase/auth';
+import 'firebase/database';
 import {GlobalStyle} from './Components/Hooks/Style/GlobalStyle'
 import {NavBar} from './Components/Hooks/NavBar/NavBar';
 import {Menu} from './Components/Hooks/Menu/Menu';
@@ -9,6 +10,7 @@ import {Order} from './Components/Hooks/Order/Order';
 import {useOpenItem} from './Components/Hooks/useOpenItem';
 import {useOrders} from './Components/Hooks/useOrders';
 import {useAuth} from './Components/Hooks/useAuth';
+import {useTitle} from './Components/Hooks/useTitle';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -29,14 +31,21 @@ function App() {
 
 
   const auth = useAuth(firebase.auth);
+  
 
   const openItem = useOpenItem();
+  useTitle(openItem.openItem);
  const orders = useOrders();
   return (
     <>
       <GlobalStyle/>
       <NavBar {...auth}/>
-      <Order {...orders} {...openItem} {...auth}/>
+      <Order 
+        {...orders} 
+        {...openItem} 
+        {...auth}
+        firebaseDatabase={firebase.database}
+      />
       <Menu {...openItem}/>
       {openItem.openItem && <ModalItem {...openItem} {...orders}/>}
     </>

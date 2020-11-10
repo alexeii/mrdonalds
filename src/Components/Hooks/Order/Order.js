@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {CheckButton} from '../Style/CheckButton';
 import {OrderListItem} from './OrderListItem';
-import {totalPriceItems, formatCurrency} from '../../Functions/secondaryFunction';
+import {totalPriceItems, formatCurrency, projection} from '../../Functions/secondaryFunction';
 
 
 const OrderStyled = styled.section`
@@ -46,8 +46,29 @@ const EmptyList = styled.p`
     text-align: center;
 `;
 
+const rulesData = {
+    itemName: ['name'],
+    price: ['price'],
+    count: ['count'],
+    topping: ['topping', item => item.filter( obj => obj.checked).map(obj => obj.name),
+        arr => arr.length ? arr : 'no topping'],
+    choice: ['choice', item => item ? item : 'no choices'],
+}
 
-export const Order = ({orders, setOrders, setOpenItem, authentification, logIn/* , logOut */}) => {
+
+export const Order = ({orders, setOrders, setOpenItem, authentification, logIn, firebaseDatabase}) => {
+    const dataBase = firebaseDatabase();
+
+    const sendOrder = () => {
+        const newOrder = orders.map(projection(rulesData));
+        dataBase.ref('orders').push().set({
+            nameClient: authentification.displayName,
+            email: authentification.email,
+            order: newOrder
+        });
+        setOrders([]);
+    }
+
     const total = orders.reduce((result, order)=>
         totalPriceItems(order) + result, 0);
 
@@ -57,7 +78,6 @@ export const Order = ({orders, setOrders, setOpenItem, authentification, logIn/*
         setOrders(newOrders);
         }
         
-    const consoleOrder = () => console.log(...orders);
    
     const totalCounter = orders.reduce((result, order)=>
         order.count + result, 0);
@@ -82,7 +102,7 @@ export const Order = ({orders, setOrders, setOpenItem, authentification, logIn/*
                 <span>{totalCounter}</span>
                 <TotalPrice>{formatCurrency(total)}</TotalPrice>
             </Total>
-            <CheckButton onClick={!orders.length ? null : authentification ? consoleOrder : logIn}  >Оформить</CheckButton>
+            <CheckButton onClick={() => !orders.length ? null : authentification ? sendOrder() : logIn()}>Оформить</CheckButton>
             
             
         </OrderStyled>

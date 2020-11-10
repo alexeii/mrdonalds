@@ -47,7 +47,7 @@ export const ListItem = ({itemList, setOpenItem}) => (
         {itemList.map(item => (
             <Item key={item.id}
                 img={item.img}
-                onClick={() => setOpenItem(item)}>
+                onClick={() => setOpenItem(item) }>
                <p>{item.name}</p> 
                <p>{formatCurrency(item.price)}</p>
             </Item>

@@ -82,6 +82,7 @@ export const ModalItem = ({openItem, setOpenItem, orders, setOrders}) => {
         const newOrders = [...orders];
         newOrders[openItem.index] = order;
         setOrders(newOrders);
+        console.log(openItem.name);
         setOpenItem(null);
     }
 
