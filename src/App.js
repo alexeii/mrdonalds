@@ -11,7 +11,9 @@ import {useOpenItem} from './Components/Hooks/useOpenItem';
 import {useOrders} from './Components/Hooks/useOrders';
 import {useAuth} from './Components/Hooks/useAuth';
 import {useTitle} from './Components/Hooks/useTitle';
-
+import {OrderConfirm} from './Components/Hooks/Order/OrderConfirm';
+import {useOrderConfirm} from './Components/Hooks/useOrderConfirm';
+import {Context} from './Components/Functions/context';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCTNHyd0QkLcdGacsDddBhmwjMtDwcvmjg",
@@ -29,26 +31,28 @@ firebase.initializeApp(firebaseConfig);
 
 function App() {
 
-
+  const firebaseDatabase = firebase.database;
   const auth = useAuth(firebase.auth);
-  
+  const orderConfirm = useOrderConfirm();
 
   const openItem = useOpenItem();
   useTitle(openItem.openItem);
  const orders = useOrders();
   return (
-    <>
+    <Context.Provider value={{
+      auth,
+      openItem,
+      orders,
+      orderConfirm,
+      firebaseDatabase
+    }}>
       <GlobalStyle/>
-      <NavBar {...auth}/>
-      <Order 
-        {...orders} 
-        {...openItem} 
-        {...auth}
-        firebaseDatabase={firebase.database}
-      />
-      <Menu {...openItem}/>
-      {openItem.openItem && <ModalItem {...openItem} {...orders}/>}
-    </>
+      <NavBar />
+      <Order  />
+      <Menu />
+      {openItem.openItem && <ModalItem />}
+      {orderConfirm.openOrderConfirm && <OrderConfirm />}
+    </Context.Provider>
     
     
   );

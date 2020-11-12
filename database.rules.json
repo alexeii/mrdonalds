@@ -2,6 +2,10 @@
   "rules": {
     "orders": {
       ".write": true
+    },
+    "goods": {
+      ".read": true,
+      ".write": true
     }
   }
 }

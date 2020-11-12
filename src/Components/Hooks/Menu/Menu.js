@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
+import {Context} from '../../Functions/context';
 import {Banner} from './BannerMenu'
 import {ListItem} from './ListItem';
 import {useFetch} from '../useFetch';
@@ -16,7 +17,8 @@ const SectionMenu = styled.section`
     padding: 30px;
 `;
 
-export const Menu = ({setOpenItem}) => {
+export const Menu = () => {
+    const {openItem:{setOpenItem}} = useContext(Context);
     const res = useFetch();
     const dbMenu = res.response;
     
@@ -46,7 +48,7 @@ export const Menu = ({setOpenItem}) => {
          color="#00BFFF"
          height={100}
          width={100}
-         timeout={3000} />
+          />
     }
         
         
