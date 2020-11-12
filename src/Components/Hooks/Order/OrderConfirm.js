@@ -35,31 +35,35 @@ const sendOrder = (dataBase, orders, authentification) => {
         });
         
     }
-
+let bulTh = false;
 
 export const OrderConfirm = () => {
         const {orders:{orders, setOrders},auth:{authentification}, orderConfirm:{setOpenOrderConfirm}, firebaseDatabase} = useContext(Context);
     const dataBase = firebaseDatabase();
     const total = orders.reduce((result, order)=>
         totalPriceItems(order) + result, 0);
-    
+        
+        const thanks = () => {
+            setTimeout(()=> {setOpenOrderConfirm(false); bulTh = false},2000);
+        }
     return (
         <Overlay>
             <Modal>
                 <OrderTitle>{authentification.displayName}</OrderTitle>
-                <Text>Осталось только подтвердить ваш заказ</Text>
-                <Total>
+                <Text>{!bulTh ? 'Осталось только подтвердить ваш заказ' : 'Спасибо за заказ!'}</Text>
+                {!bulTh && <Total>
                     <span>Итого</span>
                     <TotalPrice>{formatCurrency(total)}</TotalPrice>
-                </Total>
-                <CheckButton
+                </Total>}
+                {!bulTh && <CheckButton
                     onClick={() => {
                         sendOrder(dataBase, orders, authentification);
                         setOrders([]);
-                        setOpenOrderConfirm(false);
+                        bulTh=true;
+                        thanks();
                     }}>
                     Подтвердить
-                </CheckButton>
+                </CheckButton>}
             </Modal>
         </Overlay>
     )
