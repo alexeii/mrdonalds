@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
+import { ContextItem } from '../../Functions/contextItem';
 
 const ChoiceWrap =styled.div`
     column-count: 2;
@@ -19,7 +20,8 @@ const ChoiceLabel =styled.label`
 
 
 
-export function Choices({openItem, choice, changeChoices}) {
+export function Choices() {
+    const { choices:{choice, changeChoices} , openItem} = useContext(ContextItem);
     return (
         <>
             <h3>Выбирайте:</h3>

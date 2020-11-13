@@ -10,7 +10,7 @@ import {Choices} from './Choices';
 import {useToppings} from '../useTopping';
 import {useChoices} from '../useChoices';
 import {Overlay} from '../Style/StyleOrderModal';
-
+import {ContextItem} from '../../Functions/contextItem';
 
 
 const Modal = styled.div`
@@ -94,9 +94,16 @@ export const ModalItem = () => {
                     <div>{openItem.name}</div>  
                     <div>{formatCurrency(openItem.price)}</div>
                 </PriceBlock>
-                <CountItem {...counter}/>
-                 {openItem.toppings && <Toppings {...toppings}/>}
-                 {openItem.choices && <Choices {...choices} openItem={openItem}/>}
+                <ContextItem.Provider value={{
+                    ...counter,
+                    ...toppings,
+                    choices,
+                    openItem
+                }}>
+                    <CountItem />
+                    {openItem.toppings && <Toppings/>}
+                    {openItem.choices && <Choices/>}
+                </ContextItem.Provider>
                 <TotalPriceItem>
                     <span>Цена:</span>
                     <span>{formatCurrency(totalPriceItems(order))}</span>

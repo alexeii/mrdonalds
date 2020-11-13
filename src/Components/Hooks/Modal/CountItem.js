@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
+import { ContextItem } from '../../Functions/contextItem';
 
 const CountWrapper = styled.div`
     display: flex;
@@ -16,7 +17,8 @@ const ButtonCount = styled.button`
 
 `;
 
-export function CountItem({count, setCount, onChange}) {
+export function CountItem() {
+    const {count, setCount, onChange} = useContext(ContextItem);
     return (
         <CountWrapper>
             <span>Количество</span>
